@@ -43,10 +43,17 @@ class App extends React.Component {
             m => m.id !== movie.id
         );
 
-        this.setState({
+        // this.setState({ 
+        //     movies: newMovieList
+        // bunu kullanabiliriz problem yok ama bu yapı daha çok array boşsa, film bilgimiz olmasaydı kullanılırdı.
+        //})
+
+        this.setState(state => ({ //burada var olan statein önceki durumu üzerinden güncelleme yapiyoruz. boyle yazmak daha mantıklı
             movies: newMovieList
-        })
+        }))
     }
+
+
 
     render() {
         return (
