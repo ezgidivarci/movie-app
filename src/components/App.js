@@ -32,6 +32,22 @@ class App extends React.Component {
         ]
     }
 
+    deleteMovie = (movie) => {
+        //bir filmi sildigimde kalan filmler için yeni bir liste olusturcam.
+        //silinen in id.sini almayacak sekilde filtrelicem.
+        // o basılan id.ye (event) eşit olmayan movie idleri getir.
+        // setState ile yeni Listeyi = movies e aticam.
+        //onClick içinde bu fonksiyonu kullanabilmek için props olarak tanımlıyorum.
+
+        const newMovieList = this.state.movies.filter(
+            m => m.id !== movie.id
+        );
+
+        this.setState({
+            movies: newMovieList
+        })
+    }
+
     render() {
         return (
             <div className="container">
@@ -42,7 +58,8 @@ class App extends React.Component {
                     </div>
 
                 </div>
-                <MovieList movies={this.state.movies} />
+                <MovieList movies={this.state.movies} deleteMovieProp={this.deleteMovie} />
+                {/*componentlar arası işlemler arttıgında karisiklik oldugu için: context API , redux */}
             </div>
         )
     }
