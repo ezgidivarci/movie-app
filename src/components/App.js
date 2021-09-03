@@ -29,7 +29,9 @@ class App extends React.Component {
                 "overview": "This is a wider card with supporting text below as a natural lead-in to additional content.",
                 "imageURL": "https://image.tmdb.org/t/p/w220_and_h330_face/gKG5QGz5Ngf8fgWpBsWtlg5L2SF.jpg"
             }
-        ]
+        ],
+
+        searchQuery: "" //SearchBardaki propertyi buraya ekledim. arama kısmını burda filtreleyeceğim için anlaşılması daha kolay olsun.
     }
 
     deleteMovie = (movie) => {
@@ -53,19 +55,31 @@ class App extends React.Component {
         }))
     }
 
+    searchMovie = (event) => {
+        //console.log(event.target.value); searchquery propertysini update etmem gerek:
+        this.setState({ searchQuery: event.target.value })
+    }
+
 
 
     render() {
+
+        let filteredMovies = this.state.movies.filter(
+            (movie) => { //stateteki serachQuery filmin isminin içerisinde ise (yani -1e eşit değilse) indexOf içerisindeki yoksa -1 döner.
+                return movie.name.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1
+            }
+        )
+
         return (
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <SearchBar />
+                        <SearchBar searchMovieProp={this.searchMovie} />
 
                     </div>
 
                 </div>
-                <MovieList movies={this.state.movies} deleteMovieProp={this.deleteMovie} />
+                <MovieList movies={filteredMovies} deleteMovieProp={this.deleteMovie} />
                 {/*componentlar arası işlemler arttıgında karisiklik oldugu için: context API , redux */}
             </div>
         )
